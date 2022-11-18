@@ -1,5 +1,6 @@
 
-#include "../include/LSM6DSOX.h";
+#include "../include/LSM6DSOX.h"
+#include "I2CDevice.h"
 
 #include <cstdlib>
 #include <iostream>
@@ -19,6 +20,9 @@ int LSM6DSOX::readGyro(GyroData *gyroData) {
 }
 
 int LSM6DSOX::readAccelerometer(AccelData *accelData) {
+    accelData->x = NaN;
+    accelData->y = NaN;
+    accelData->z = NaN;
 
     return 0;
 }

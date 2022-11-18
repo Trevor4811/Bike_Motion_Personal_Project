@@ -3,7 +3,7 @@
 
 #define LSM6DS_I2CADDR_DEFAULT 0x6A ///< LSM6DS default i2c address
 
-#include "i2sSensor.h";
+#include "I2CSensor.h";
 
 enum RegisterAddress {
     LSM6DS_FUNC_CFG_ACCESS = 0x1, ///< Enable embedded functions register
@@ -25,12 +25,20 @@ enum RegisterAddress {
 };
 
 typedef struct GyroData {
+    uint16_t rawX = NULL;
+    uint16_t rawy = NULL;
+    uint16_t rawz = NULL;
+
     float x = NULL;
     float y = NULL;
     float z = NULL;
 } GyroData;
 
 typedef struct AccelData {
+    uint16_t rawX = NULL;
+    uint16_t rawy = NULL;
+    uint16_t rawz = NULL;
+
     float x = NULL;
     float y = NULL;
     float z = NULL;
@@ -39,7 +47,7 @@ typedef struct AccelData {
 /*!
  * @brief Class to control and communicate with the LSM6DSOX IMU
  */
-class LSM6DSOX : public i2sSensor {
+class LSM6DSOX : public I2CDevice {
 
     public:
 
