@@ -1,33 +1,33 @@
 #include <string>
 #include <iostream>
-#include <filesystem>
+//#include <fstream>
+//#include <i2cFilesystem>
+#include <unistd.h>
+#include <fcntl.h>
+#include <sys/ioctl.h>
+#include <linux/i2c-dev.h>
 
 #include "../include/I2CBus.h"
-
-namespace fs = std::filesystem;
 
 I2CBus::I2CBus() {
     getAvailableBusses();
 }
 
 int *I2CBus::openI2CBus() {
-    int *file = new int;
-    char filename[40];
+    int *i2cFile = new int(0);
+    char i2cFilename[40];
     int device_num = 1;
 
-    std::snprintf(filename, 19, "/dev/i2c-%d", device_num);
-    *file = std::open(filename, O_RDWR);
-    if (*file < 0) {
-        return -1;
-    }
-    return file;
+    snprintf(i2cFilename, 19, "/dev/i2c-%d", device_num);
+    *i2cFile = open(i2cFilename, O_RDWR);
+    return i2cFile;
 }
 
 
 // i2c-1
 void I2CBus::getAvailableBusses() {
     return;
-    std::string path = "/sys/class/i2c-dev/";
+    /*std::string path = "/sys/class/i2c-dev/";
 
     for (const auto & entry : fs::directory_iterator(path))
         char tempVal[20];
@@ -38,15 +38,14 @@ void I2CBus::getAvailableBusses() {
             
         }
         std::cout << entry.path() << std::endl;
-
+    */
 }
 
 // Test bus open
 int main(int argc, char** argv) {
-    I2CBus::I2CBus bus = I2CBus::I2CBus();
-    int filenum = bus.openI2CBus();
-    std::cout << filenum << std::endl;
-    
+    I2CBus bus;
+    int *i2cFilenum = bus.openI2CBus();
+    std::cout << *i2cFilenum << "\n";
+    delete i2cFilenum;
 }
 
-#endif

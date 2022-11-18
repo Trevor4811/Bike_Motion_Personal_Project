@@ -4,10 +4,9 @@ SRCDIR := src
 BUILDDIR := build
 BINDIR := bin
 GLOBPATH := /home/greensight/nasa_adesssa/cycle_compress/CVersion
-CXX := gcc
+CXX := g++
 CFLAGS :=	-c \
 			-g \
-			-fPIC 
 
 ifeq ($(OS),Windows_NT)
 	IS_WIN := 1
@@ -15,13 +14,10 @@ endif
 
 .PHONY: all
 all: 	dirs \
-		ZipCycles \
-		ZipSamples.so
+		I2CBus\
 
 force: 	clean \
-		dirs \
-		ZipCycles \
-		ZipSamples.so
+		all\
 
 test: 	clean \
 		dirs \
@@ -39,15 +35,11 @@ else
 endif
 
 
-ZipSamplesTest: dirs ZipSamples.o FileZip.o
-	$(CXX) -o $(BINDIR)/ZipSamplesTest $(BUILDDIR)/ZipSamples.o $(BUILDDIR)/FileZip.o
+I2CBus: dirs I2CBus.o
+	$(CXX) -o $(BINDIR)/I2CBus $(BUILDDIR)/I2CBus.o
 
-ZipSamples.o: dirs $(SRCDIR)/ZipSamples.c
-	$(CXX) $(CFLAGS) -o $(BUILDDIR)/ZipSamples.o $(SRCDIR)/ZipSamples.c 
-
-
-FileZip.o: dirs $(SRCDIR)/FileZip.c
-	$(CXX) $(CFLAGS) -o $(BUILDDIR)/FileZip.o $(SRCDIR)/FileZip.c 
+I2CBus.o: dirs $(SRCDIR)/I2CBus.cpp
+	$(CXX) $(CFLAGS) -o $(BUILDDIR)/I2CBus.o $(SRCDIR)/I2CBus.cpp
 
 .PHONY: clean
 clean : 
