@@ -41,6 +41,7 @@ void I2CBus::getAvailableBusses() {
     */
 }
 
+/*
 // Test bus open
 int main(int argc, char** argv) {
     I2CBus bus;
@@ -48,4 +49,4 @@ int main(int argc, char** argv) {
     std::cout << *i2cFilenum << "\n";
     delete i2cFilenum;
 }
-
+*/

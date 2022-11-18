@@ -14,7 +14,7 @@ endif
 
 .PHONY: all
 all: 	dirs \
-		I2CBus\
+		I2CDevice\
 
 force: 	clean \
 		all\
@@ -33,6 +33,12 @@ else
 	mkdir -p $(BINDIR)
 	mkdir -p $(BUILDDIR)
 endif
+
+I2CDevice: dirs I2CDevice.o I2CBus.o
+	$(CXX) -o $(BINDIR)/I2CDevice $(BUILDDIR)/I2CDevice.o
+
+I2CDevice.o: dirs $(SRCDIR)/I2CDevice.cpp
+	$(CXX) $(CFLAGS) -o $(BUILDDIR)/I2CDevice.o $(SRCDIR)/I2CDevice.cpp
 
 
 I2CBus: dirs I2CBus.o

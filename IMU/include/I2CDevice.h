@@ -17,14 +17,15 @@ class I2CDevice {
 
     public:
 
-    protected:
-
     I2CDevice(const int slaveAddr);
+    
+    protected:
 
     const int slaveAddress;
 
     int writeBuffer();
     int readBuffer();
+    int verifyI2CAddr();
 
     private:
 
