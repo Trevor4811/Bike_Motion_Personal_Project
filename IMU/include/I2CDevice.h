@@ -21,9 +21,7 @@ class I2CDevice {
 
     I2CDevice(const int slaveAddr);
 
-    int dataPin;
-    int clockPin;
-    uint8_t slaveAddress;
+    const int slaveAddress;
 
     int writeBuffer();
     int readBuffer();
