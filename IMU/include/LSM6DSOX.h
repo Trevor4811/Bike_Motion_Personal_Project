@@ -3,6 +3,13 @@
 
 #define LSM6DS_I2CADDR_DEFAULT 0x6A ///< LSM6DS default i2c address
 
+#include <iostream>
+
+extern "C" {
+#include <linux/i2c-dev.h>
+#include <i2c/smbus.h>
+}
+
 #include "I2CDevice.h"
 
 enum RegisterAddress {

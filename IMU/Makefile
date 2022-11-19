@@ -13,7 +13,7 @@ endif
 
 .PHONY: all
 all: 	dirs \
-		I2CDevice\
+		LSM6DSOX\
 
 force: 	clean \
 		all\

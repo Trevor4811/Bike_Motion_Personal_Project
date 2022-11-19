@@ -24,7 +24,7 @@ I2CDevice::I2CDevice(const int slaveAddr) : slaveAddress(slaveAddr) {
 
     if (ioctl(deviceFilenum, I2C_SLAVE, slaveAddress) < 0) {
         /* ERROR HANDLING; you can check errno to see what went wrong */
-    	std::cout << "Bad ioctl:" << val << "\t" << slaveAddress << "\n";
+    	std::cout << "Bad ioctl to slave:" << slaveAddress << "\n";
         perror("error");
     } else {
         std::cout << "Successfully addressed device\n";

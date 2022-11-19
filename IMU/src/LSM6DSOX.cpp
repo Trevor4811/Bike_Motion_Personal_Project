@@ -1,14 +1,16 @@
 
 #include "../include/LSM6DSOX.h"
 
-#include <iostream.h>
 
 // Constructor that calls the device constructor
 LSM6DSOX::LSM6DSOX(const int slaveAddr) : I2CDevice(slaveAddr) {
-    if (verifyI2CAddr()) {
+    
+    uint16_t returnVal = verifyI2CAddr();
+    if (returnVal) {
         //Error
-        std::cout << "Failed to verify address. Actual: ";
-        std::cout << std::hex << buf << "\n" << std::dec;
+	std::cout << "Failed to verify address. Actual: ";
+        std::cout << std::hex << returnVal << "\n" << std::dec;
+    	return;
     } 
 
     std::cout << "Verified address\n";
@@ -16,17 +18,17 @@ LSM6DSOX::LSM6DSOX(const int slaveAddr) : I2CDevice(slaveAddr) {
 }
 
 int LSM6DSOX::readGyro(GyroData *gyroData) {
-    gyroData->x = NaN;
-    gyroData->y = NaN;
-    gyroData->z = NaN;
+    gyroData->x = 0;
+    gyroData->y = 0;
+    gyroData->z = 0;
 
     return 0;
 }
 
 int LSM6DSOX::readAccelerometer(AccelData *accelData) {
-    accelData->x = NaN;
-    accelData->y = NaN;
-    accelData->z = NaN;
+    accelData->x = 0;
+    accelData->y = 0;
+    accelData->z = 0;
 
     return 0;
 }
@@ -38,7 +40,7 @@ uint16_t LSM6DSOX::verifyI2CAddr() {
     if (buf != RegisterAddress::LSM6DSOX_CHIP_ID) {
         return buf;
     }
-    return 0
+    return 0;
 }
 
 int main(int argc, char **argv) {
