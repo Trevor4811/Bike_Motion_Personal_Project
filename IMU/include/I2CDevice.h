@@ -21,11 +21,11 @@ class I2CDevice {
     
     protected:
 
+    int deviceFilenum;
     const int slaveAddress;
 
     int writeBuffer();
     int readBuffer();
-    int verifyI2CAddr();
 
     private:
 

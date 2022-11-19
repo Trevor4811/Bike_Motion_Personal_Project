@@ -56,10 +56,8 @@ class LSM6DSOX : public I2CDevice {
     /**
      * @brief Construct a new LSM6DSOX object
      * 
-     * @param dataPin The I2C data pin
-     * @param clockPin The I2C clock pin
      */
-    LSM6DSOX(const int dataPin, const int clockPin);
+    LSM6DSOX(const int slaveAddr);
 
     /*!
      * @brief Read the gyroscope data
@@ -77,6 +75,10 @@ class LSM6DSOX : public I2CDevice {
      * @return int - Success returns 0
      */
     int readAccelerometer(AccelData *accelData);
+
+    private:
+
+    uint16_t verifyI2CAddr();
 
 };
 

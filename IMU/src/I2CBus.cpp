@@ -13,13 +13,13 @@ I2CBus::I2CBus() {
     getAvailableBusses();
 }
 
-int *I2CBus::openI2CBus() {
-    int *i2cFile = new int(0);
+int I2CBus::openI2CBus() {
+    int i2cFile;
     char i2cFilename[40];
     int device_num = 1;
 
     snprintf(i2cFilename, 19, "/dev/i2c-%d", device_num);
-    *i2cFile = open(i2cFilename, O_RDWR);
+    i2cFile = open(i2cFilename, O_RDWR);
     return i2cFile;
 }
 

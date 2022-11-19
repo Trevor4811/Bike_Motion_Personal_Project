@@ -3,7 +3,6 @@ INCDIR := include
 SRCDIR := src
 BUILDDIR := build
 BINDIR := bin
-GLOBPATH := /home/greensight/nasa_adesssa/cycle_compress/CVersion
 CXX := g++
 CFLAGS :=	-c \
 			-g \
@@ -34,8 +33,14 @@ else
 	mkdir -p $(BUILDDIR)
 endif
 
+LSM6DSOX: dirs LSM6DSOX.o I2CDevice.o
+	$(CXX) -o $(BINDIR)/LSM6DSOX $(BUILDDIR)/LSM6DSOX.o $(BUILDDIR)/I2CDevice.o $(BUILDDIR)/I2CBus.o -li2c
+
+LSM6DSOX.o: dirs $(SRCDIR)/LSM6DSOX.cpp
+	$(CXX) $(CFLAGS) -o $(BUILDDIR)/LSM6DSOX.o $(SRCDIR)/LSM6DSOX.cpp
+
 I2CDevice: dirs I2CDevice.o I2CBus.o
-	$(CXX) -o $(BINDIR)/I2CDevice $(BUILDDIR)/I2CDevice.o -li2c
+	$(CXX) -o $(BINDIR)/I2CDevice $(BUILDDIR)/I2CDevice.o $(BUILDDIR)/I2CBus.o -li2c
 
 I2CDevice.o: dirs $(SRCDIR)/I2CDevice.cpp
 	$(CXX) $(CFLAGS) -o $(BUILDDIR)/I2CDevice.o $(SRCDIR)/I2CDevice.cpp

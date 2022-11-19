@@ -16,7 +16,7 @@ class I2CBus {
 
     BusString_t availableBusses[2];
     
-    int *openI2CBus();
+    int openI2CBus();
 
     private:
 
