@@ -3,9 +3,11 @@
 
 #define LSM6DS_I2CADDR_DEFAULT 0x6A ///< LSM6DS default i2c address
 
-#include "I2CSensor.h";
+#include "I2CDevice.h"
 
 enum RegisterAddress {
+    LSM6DSOX_CHIP_ID = 0x6C,
+	    
     LSM6DS_FUNC_CFG_ACCESS = 0x1, ///< Enable embedded functions register
     LSM6DS_INT1_CTRL = 0x0D,      ///< Interrupt control for INT 1
     LSM6DS_INT2_CTRL = 0x0E,      ///< Interrupt control for INT 2
@@ -25,23 +27,23 @@ enum RegisterAddress {
 };
 
 typedef struct GyroData {
-    uint16_t rawX = NULL;
-    uint16_t rawy = NULL;
-    uint16_t rawz = NULL;
+    uint16_t rawX;
+    uint16_t rawy;
+    uint16_t rawz;
 
-    float x = NULL;
-    float y = NULL;
-    float z = NULL;
+    float x;
+    float y;
+    float z;
 } GyroData;
 
 typedef struct AccelData {
-    uint16_t rawX = NULL;
-    uint16_t rawy = NULL;
-    uint16_t rawz = NULL;
+    uint16_t rawx;
+    uint16_t rawy;
+    uint16_t rawz;
 
-    float x = NULL;
-    float y = NULL;
-    float z = NULL;
+    float x;
+    float y;
+    float z;
 } AccelData;
 
 /*!
