@@ -6,31 +6,31 @@
 #include <iostream>
 
 extern "C" {
-#include <linux/i2c-dev.h>
-#include <i2c/smbus.h>
+    #include <linux/i2c-dev.h>
+    #include <i2c/smbus.h>
 }
 
 #include "I2CDevice.h"
 
-enum RegisterAddress {
-    LSM6DSOX_CHIP_ID = 0x6C,
+enum LSM6DSOXRegisterAddress {
+    CHIP_ID = 0x6C,
 	    
-    LSM6DS_FUNC_CFG_ACCESS = 0x1, ///< Enable embedded functions register
-    LSM6DS_INT1_CTRL = 0x0D,      ///< Interrupt control for INT 1
-    LSM6DS_INT2_CTRL = 0x0E,      ///< Interrupt control for INT 2
-    LSM6DS_WHOAMI = 0x0F,         ///< Chip ID register
-    LSM6DS_CTRL1_XL = 0x10,       ///< Main accelerometer config register
-    LSM6DS_CTRL2_G = 0x11,        ///< Main gyro config register
-    LSM6DS_CTRL3_C = 0x12,        ///< Main configuration register
-    LSM6DS_CTRL8_XL = 0x17,       ///< High and low pass for accel
-    LSM6DS_CTRL10_C = 0x19,       ///< Main configuration register
-    LSM6DS_WAKEUP_SRC = 0x1B,     ///< Why we woke up
-    LSM6DS_STATUS_REG = 0x1E,     ///< Status register
-    LSM6DS_OUT_TEMP_L = 0x20,     ///< First data register (temperature low)
-    LSM6DS_OUTX_L_G = 0x22,       ///< First gyro data register
-    LSM6DS_OUTX_L_A = 0x28,       ///< First accel data register
-    LSM6DS_STEPCOUNTER = 0x4B,    ///< 16-bit step counter
-    LSM6DS_TAP_CFG = 0x58        ///< Tap/pedometer configuration
+    FUNC_CFG_ACCESS = 0x1, ///< Enable embedded functions register
+    INT1_CTRL = 0x0D,      ///< Interrupt control for INT 1
+    INT2_CTRL = 0x0E,      ///< Interrupt control for INT 2
+    WHOAMI = 0x0F,         ///< Chip ID register
+    CTRL1_XL = 0x10,       ///< Main accelerometer config register
+    CTRL2_G = 0x11,        ///< Main gyro config register
+    CTRL3_C = 0x12,        ///< Main configuration register
+    CTRL8_XL = 0x17,       ///< High and low pass for accel
+    CTRL10_C = 0x19,       ///< Main configuration register
+    WAKEUP_SRC = 0x1B,     ///< Why we woke up
+    STATUS_REG = 0x1E,     ///< Status register
+    OUT_TEMP_L = 0x20,     ///< First data register (temperature low)
+    OUTX_L_G = 0x22,       ///< First gyro data register
+    OUTX_L_A = 0x28,       ///< First accel data register
+    STEPCOUNTER = 0x4B,    ///< 16-bit step counter
+    TAP_CFG = 0x58        ///< Tap/pedometer configuration
 };
 
 typedef struct GyroData {

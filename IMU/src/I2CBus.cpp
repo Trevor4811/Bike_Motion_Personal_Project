@@ -1,12 +1,3 @@
-#include <string>
-#include <iostream>
-//#include <fstream>
-//#include <i2cFilesystem>
-#include <unistd.h>
-#include <fcntl.h>
-#include <sys/ioctl.h>
-#include <linux/i2c-dev.h>
-
 #include "../include/I2CBus.h"
 
 I2CBus::I2CBus() {

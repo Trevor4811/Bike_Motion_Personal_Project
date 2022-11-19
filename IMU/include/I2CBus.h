@@ -1,8 +1,11 @@
 #ifndef _I2CBUS_H
 #define _I2CBUS_H
 
-#include <linux/i2c-dev.h>
-#include <i2c/smbus.h>
+#include <string>
+#include <iostream>
+#include <unistd.h>
+#include <fcntl.h>
+#include <sys/ioctl.h>
 
 typedef char BusString_t[20];
 

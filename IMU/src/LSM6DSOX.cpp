@@ -22,7 +22,11 @@ int LSM6DSOX::readGyro(GyroData *gyroData) {
     gyroData->y = 0;
     gyroData->z = 0;
 
-    return 0;
+    uint16_t temp = readRegister(LSM6DSOXRegisterAddress::STATUS_REG);
+    temp = (temp << 1) & 1;
+    std::cout << "gyro: " << temp << "\n";
+
+    return temp;
 }
 
 int LSM6DSOX::readAccelerometer(AccelData *accelData) {
@@ -35,9 +39,9 @@ int LSM6DSOX::readAccelerometer(AccelData *accelData) {
 
 uint16_t LSM6DSOX::verifyI2CAddr() {
     uint16_t buf = 0;
-    buf = i2c_smbus_read_word_data(deviceFilenum, RegisterAddress::LSM6DS_WHOAMI);
+    buf = i2c_smbus_read_word_data(deviceFilenum, LSM6DSOXRegisterAddress::WHOAMI);
 
-    if (buf != RegisterAddress::LSM6DSOX_CHIP_ID) {
+    if (buf != LSM6DSOXRegisterAddress::CHIP_ID) {
         return buf;
     }
     return 0;
@@ -45,7 +49,7 @@ uint16_t LSM6DSOX::verifyI2CAddr() {
 
 int main(int argc, char **argv) {
     //int LSM6DSOX_ADRRESS = 0b110101;
-    int LSM6DSOX_ADRRESS = 0x6a;
+    int IMU_ADRRESS = 0x6a;
     //int LSM6DSOX_ADRRESS = 0x1c;
     LSM6DSOX imu(LSM6DSOX_ADRRESS);
 

@@ -10,9 +10,6 @@ extern "C" {
 }
 #include <stdio.h>
 #include "../include/I2CDevice.h"
-#include "../include/I2CBus.h"
-// #include "I2CBus.cpp"
-#include "../include/LSM6DSOX.h"
 
 // Public //
 
@@ -33,6 +30,12 @@ I2CDevice::I2CDevice(const int slaveAddr) : slaveAddress(slaveAddr) {
 }
 
 // Protected //
+
+uint16_t I2CDevice::readRegister(unint16_t regAddress) {
+    uint16_t buf = 0;
+    buf = i2c_smbus_read_word_data(deviceFilenum, regAddress);
+    return buf;
+}
 
 // Private //
 
