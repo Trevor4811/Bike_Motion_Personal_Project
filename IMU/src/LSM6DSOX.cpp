@@ -1,6 +1,7 @@
 
 #include "../include/LSM6DSOX.h"
 
+// Public //
 
 // Constructor that calls the device constructor
 LSM6DSOX::LSM6DSOX(const int slaveAddr) : I2CDevice(slaveAddr) {
@@ -9,11 +10,14 @@ LSM6DSOX::LSM6DSOX(const int slaveAddr) : I2CDevice(slaveAddr) {
     if (returnVal) {
         //Error
 	std::cout << "Failed to verify address. Actual: ";
-        std::cout << std::hex << returnVal << "\n" << std::dec;
+        std:: << stcoutd::hex << returnVal << "\n" << std::dec;
     	return;
     } 
 
     std::cout << "Verified address\n";
+
+    this.setupAccel();
+    this.setupGyro();
     
 }
 
@@ -37,6 +41,8 @@ int LSM6DSOX::readAccelerometer(AccelData *accelData) {
     return 0;
 }
 
+// Private //
+
 uint16_t LSM6DSOX::verifyI2CAddr() {
     uint16_t buf = 0;
     buf = i2c_smbus_read_word_data(deviceFilenum, LSM6DSOXRegisterAddress::WHOAMI);
@@ -45,6 +51,22 @@ uint16_t LSM6DSOX::verifyI2CAddr() {
         return buf;
     }
     return 0;
+}
+
+int LSM6DSOX::setupAccel() {
+    // Turn on the accelerometer
+    writeRegister(LSM6DSOXRegisterAddress::INT1_CTRL, 0x01)
+
+    // Set high performance mode (417 Hz)
+    writeRegister(LSM6DSOXRegisterAddress::CTRL1_XL, 0x60)
+}
+
+int LSM6DSOX::setupGyro() {
+    // Turn on the gyroscope
+    writeRegister(LSM6DSOXRegisterAddress::INT1_CTRL, 0x02)
+
+    // Set high performance mode (417 Hz)
+    writeRegister(LSM6DSOXRegisterAddress::CTRL2_G, 0x60)
 }
 
 int main(int argc, char **argv) {
