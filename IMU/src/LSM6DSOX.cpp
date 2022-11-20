@@ -1,6 +1,6 @@
 
 #include "../include/LSM6DSOX.h"
-
+#include <bitset>
 // Public //
 
 // Constructor that calls the device constructor
@@ -27,8 +27,13 @@ int LSM6DSOX::readGyro(GyroData *gyroData) {
     gyroData->z = 0;
 
     uint16_t temp = readRegister(LSM6DSOXRegisterAddress::STATUS_REG);
-    temp = (temp << 1) & 1;
-    std::cout << "gyro: " << temp << "\n";
+    //temp = (temp << 1) & 1;
+    std::cout << "gyro: " << std::bitset<16>(temp) << "\n";
+    
+    temp = readRegister(LSM6DSOXRegisterAddress::OUTX_L_G);
+    //temp = (temp << 1) & 1;
+    std::cout << "gyro: " << std::bitset<16>(temp) << "\n";
+
 
     return temp;
 }
@@ -73,7 +78,10 @@ int main(int argc, char **argv) {
     //int LSM6DSOX_ADRRESS = 0b110101;
     int IMU_ADRRESS = 0x6a;
     //int LSM6DSOX_ADRRESS = 0x1c;
-    LSM6DSOX imu(LSM6DSOX_ADRRESS);
+    LSM6DSOX imu(IMU_ADRRESS);
+    GyroData gd;
+    imu.readGyro(&gd);
+
 
     
 

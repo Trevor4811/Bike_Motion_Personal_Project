@@ -31,7 +31,7 @@ I2CDevice::I2CDevice(const int slaveAddr) : slaveAddress(slaveAddr) {
 
 // Protected //
 
-uint16_t I2CDevice::readRegister(unint16_t regAddress) {
+uint16_t I2CDevice::readRegister(uint16_t regAddress) {
     uint16_t buf = 0;
     buf = i2c_smbus_read_word_data(deviceFilenum, regAddress);
     return buf;

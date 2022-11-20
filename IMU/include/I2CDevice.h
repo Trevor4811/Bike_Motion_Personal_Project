@@ -7,7 +7,7 @@
 #include <sys/ioctl.h>	
 
 #include "I2CBus.h"
-#include "LSM6DSOX.h"
+//#include "LSM6DSOX.h"
 
 /*!
  * @brief Class that represents communication with a general i2c slave device
@@ -24,7 +24,7 @@ class I2CDevice {
     const int slaveAddress;
 
     int writeRegister();
-    int readRegister();
+    uint16_t readRegister(uint16_t regAddress);
 
     private:
 
