@@ -30,6 +30,10 @@ int LSM6DSOX::readGyro(GyroData *gyroData) {
     //temp = (temp << 1) & 1;
     std::cout << "gyro: " << std::bitset<16>(temp) << "\n";
 
+    temp = readRegister(LSM6DSOXRegisterAddress::CTRL2_G);
+    //temp = (temp << 1) & 1;
+    std::cout << "gyro: " << std::bitset<16>(temp) << "\n";
+
 
     return temp;
 }
