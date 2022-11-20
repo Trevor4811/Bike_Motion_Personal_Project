@@ -16,7 +16,7 @@ LSM6DSOX::LSM6DSOX(const int slaveAddr) : I2CDevice(slaveAddr) {
 
     std::cout << "Verified address\n";
 
-    setupAccel();
+    // setupAccel();
     setupGyro();
     
 }
@@ -26,15 +26,15 @@ int LSM6DSOX::readGyro(GyroData *gyroData) {
     gyroData->y = 0;
     gyroData->z = 0;
 
-    uint8_t temp = readRegister(LSM6DSOXRegisterAddress::STATUS_REG);
+    uint8_t temp = readRegisterByte(LSM6DSOXRegisterAddress::STATUS_REG);
     //temp = (temp << 1) & 1;
     std::cout << "Status: " << std::bitset<16>(temp) << "\n";
     
-    temp = readRegister(LSM6DSOXRegisterAddress::OUTX_L_G);
+    temp = readRegisterByte(LSM6DSOXRegisterAddress::OUTX_L_G);
     //temp = (temp << 1) & 1;
     std::cout << "gyro: " << std::bitset<16>(temp) << "\n";
 
-    temp = readRegister(LSM6DSOXRegisterAddress::CTRL2_G);
+    temp = readRegisterByte(LSM6DSOXRegisterAddress::CTRL2_G);
     //temp = (temp << 1) & 1;
     std::cout << "gyro Settings: " << std::bitset<16>(temp) << "\n";
 
@@ -64,20 +64,20 @@ uint16_t LSM6DSOX::verifyI2CAddr() {
 
 int LSM6DSOX::setupAccel() {
     // Turn on the accelerometer
-    writeRegister(LSM6DSOXRegisterAddress::INT1_CTRL, 0x01);
+    writeRegisterWordBits(LSM6DSOXRegisterAddress::INT1_CTRL, 1, 0b1, 8);
 
     // Set high performance mode (417 Hz)
-    writeRegister(LSM6DSOXRegisterAddress::CTRL1_XL, 0x60);
+    writeRegisterWordBits(LSM6DSOXRegisterAddress::CTRL1_XL, 2, 0b11, 0);
 
     return 0;
 }
 
 int LSM6DSOX::setupGyro() {
     // Turn on the gyroscope
-    writeRegister(LSM6DSOXRegisterAddress::INT1_CTRL, 0x02);
+    std::cout << "int1_ctrl: " << writeRegisterWordBits(LSM6DSOXRegisterAddress::INT1_CTRL, 1, 0b1, 7) << "\n";
 
     // Set high performance mode (417 Hz)
-    writeRegister(LSM6DSOXRegisterAddress::CTRL2_G, 0x60);
+    std::cout << "int1_ctrl: " << writeRegisterWordBits(LSM6DSOXRegisterAddress::CTRL2_G, 2, 0b11, 0) << "\n";
 
     return 0;
 }
