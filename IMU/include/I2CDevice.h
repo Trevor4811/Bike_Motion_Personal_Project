@@ -23,8 +23,8 @@ class I2CDevice {
     int deviceFilenum;
     const int slaveAddress;
 
-    int writeRegister();
-    uint16_t readRegister(uint16_t regAddress);
+    uint8_t readRegister(uint16_t regAddress);
+    uint8_t writeRegister(uint16_t regAddress, uint8_t val);
 
     private:
 

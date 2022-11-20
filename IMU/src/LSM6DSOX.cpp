@@ -10,14 +10,14 @@ LSM6DSOX::LSM6DSOX(const int slaveAddr) : I2CDevice(slaveAddr) {
     if (returnVal) {
         //Error
 	std::cout << "Failed to verify address. Actual: ";
-        std:: << stcoutd::hex << returnVal << "\n" << std::dec;
+        std::cout << std::hex << returnVal << "\n" << std::dec;
     	return;
     } 
 
     std::cout << "Verified address\n";
 
-    this.setupAccel();
-    this.setupGyro();
+    setupAccel();
+    setupGyro();
     
 }
 
@@ -26,9 +26,9 @@ int LSM6DSOX::readGyro(GyroData *gyroData) {
     gyroData->y = 0;
     gyroData->z = 0;
 
-    uint16_t temp = readRegister(LSM6DSOXRegisterAddress::STATUS_REG);
+    uint8_t temp = readRegister(LSM6DSOXRegisterAddress::STATUS_REG);
     //temp = (temp << 1) & 1;
-    std::cout << "gyro: " << std::bitset<16>(temp) << "\n";
+    std::cout << "Status: " << std::bitset<16>(temp) << "\n";
     
     temp = readRegister(LSM6DSOXRegisterAddress::OUTX_L_G);
     //temp = (temp << 1) & 1;
@@ -36,7 +36,7 @@ int LSM6DSOX::readGyro(GyroData *gyroData) {
 
     temp = readRegister(LSM6DSOXRegisterAddress::CTRL2_G);
     //temp = (temp << 1) & 1;
-    std::cout << "gyro: " << std::bitset<16>(temp) << "\n";
+    std::cout << "gyro Settings: " << std::bitset<16>(temp) << "\n";
 
 
     return temp;
@@ -64,18 +64,22 @@ uint16_t LSM6DSOX::verifyI2CAddr() {
 
 int LSM6DSOX::setupAccel() {
     // Turn on the accelerometer
-    writeRegister(LSM6DSOXRegisterAddress::INT1_CTRL, 0x01)
+    writeRegister(LSM6DSOXRegisterAddress::INT1_CTRL, 0x01);
 
     // Set high performance mode (417 Hz)
-    writeRegister(LSM6DSOXRegisterAddress::CTRL1_XL, 0x60)
+    writeRegister(LSM6DSOXRegisterAddress::CTRL1_XL, 0x60);
+
+    return 0;
 }
 
 int LSM6DSOX::setupGyro() {
     // Turn on the gyroscope
-    writeRegister(LSM6DSOXRegisterAddress::INT1_CTRL, 0x02)
+    writeRegister(LSM6DSOXRegisterAddress::INT1_CTRL, 0x02);
 
     // Set high performance mode (417 Hz)
-    writeRegister(LSM6DSOXRegisterAddress::CTRL2_G, 0x60)
+    writeRegister(LSM6DSOXRegisterAddress::CTRL2_G, 0x60);
+
+    return 0;
 }
 
 int main(int argc, char **argv) {
