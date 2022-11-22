@@ -101,22 +101,22 @@ int16_t I2CDevice::writeRegisterByteBitsLSBOffset(uint16_t regAddress, uint8_t v
 
     // Mask bits being written to
     uint8_t ones = ~0;
-    uint8_t mask = ones << (totalNumBits-numBits);
-    mask = mask >> offset; // 00110000
+    uint8_t mask = ones >> (totalNumBits-numBits);
+    mask = mask << (offset-numBits+1); // 00110000
     mask = ~mask; // 11001111
     buf = buf & mask;
 
     std::cout << "mask = \t" << std::bitset<8>(mask) << "\n";
-    
+
     // write bits to offset location
-    buf = buf | (val << ((totalNumBits-numBits)-offset));
+    buf = buf | (val << (offset-numBits+1));
 
     // Write new word data
-    if (i2c_smbus_write_word_data(deviceFilenum, regAddress, buf)) {
+    if (i2c_smbus_write_byte_data(deviceFilenum, regAddress, buf)) {
         perror("Failed to write word data");
         return -1;
     }
-    std::cout << "Buf: \t" << std::bitset<8>(buf) << "\n"; 
+    std::cout << "Buf: \t" << std::bitset<8>(buf) << "\n";
     return buf;
 
 }
