@@ -64,10 +64,10 @@ uint16_t LSM6DSOX::verifyI2CAddr() {
 
 int LSM6DSOX::setupAccel() {
     // Turn on the accelerometer
-    writeRegisterWordBits(LSM6DSOXRegisterAddress::INT1_CTRL, 1, 0b1, 8);
+    writeRegisterWordBitsMSBOffset(LSM6DSOXRegisterAddress::INT1_CTRL, 1, 0b1, 8);
 
     // Set high performance mode (417 Hz)
-    writeRegisterWordBits(LSM6DSOXRegisterAddress::CTRL1_XL, 2, 0b11, 0);
+    writeRegisterWordBitsMSBOffset(LSM6DSOXRegisterAddress::CTRL1_XL, 2, 0b11, 0);
 
     return 0;
 }
@@ -75,11 +75,11 @@ int LSM6DSOX::setupAccel() {
 int LSM6DSOX::setupGyro() {
     // Turn on the gyroscope
     std::cout << "INT1_CTRL: " << "\n";
-    writeRegisterWordBits(LSM6DSOXRegisterAddress::INT1_CTRL, 1, 0b1, 7);
+    writeRegisterWordBitsMSBOffset(LSM6DSOXRegisterAddress::INT1_CTRL, 1, 0b1, 7);
 
     // Set high performance mode (417 Hz)
     std::cout << "CTRL2_G: " << "\n";
-    writeRegisterWordBits(LSM6DSOXRegisterAddress::CTRL2_G, 2, 0b11, 0);
+    writeRegisterWordBitsMSBOffset(LSM6DSOXRegisterAddress::CTRL2_G, 2, 0b11, 0);
 
     return 0;
 }
