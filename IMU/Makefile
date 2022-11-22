@@ -18,9 +18,8 @@ all: 	dirs \
 force: 	clean \
 		all\
 
-test: 	clean \
-		dirs \
-		ZipSamplesTest
+test: 	dirs \
+		TestFile
 
 
 .PHONY: dirs
@@ -33,7 +32,7 @@ else
 	mkdir -p $(BUILDDIR)
 endif
 
-LSM6DSOX: dirs LSM6DSOX.o I2CDevice.o
+LSM6DSOX: dirs LSM6DSOX.o I2CDevice.o I2CBus.o
 	$(CXX) -o $(BINDIR)/LSM6DSOX $(BUILDDIR)/LSM6DSOX.o $(BUILDDIR)/I2CDevice.o $(BUILDDIR)/I2CBus.o -li2c
 
 LSM6DSOX.o: dirs $(SRCDIR)/LSM6DSOX.cpp
@@ -51,6 +50,12 @@ I2CBus: dirs I2CBus.o
 
 I2CBus.o: dirs $(SRCDIR)/I2CBus.cpp
 	$(CXX) $(CFLAGS) -o $(BUILDDIR)/I2CBus.o $(SRCDIR)/I2CBus.cpp
+
+TestFile: dirs TestFile.o
+	$(CXX) -o $(BINDIR)/TestFile $(BUILDDIR)/TestFile.o
+
+TestFile.o: dirs $(SRCDIR)/TestFile.cpp
+	$(CXX) $(CFLAGS) -o $(BUILDDIR)/TestFile.o $(SRCDIR)/TestFile.cpp
 
 .PHONY: clean
 clean : 

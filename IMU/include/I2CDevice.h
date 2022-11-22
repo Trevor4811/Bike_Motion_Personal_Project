@@ -25,7 +25,7 @@ class I2CDevice {
 
     uint8_t readRegisterByte(uint16_t regAddress);
     uint8_t writeRegisterByte(uint16_t regAddress, uint8_t val);
-    uint8_t writeRegisterWordBits(uint16_t regAddress, uint16_t val, uint8_t numBits, uint8_t offset);
+    int32_t writeRegisterWordBits(uint16_t regAddress, uint16_t val, uint8_t numBits, uint8_t offset);
 
 
     private:

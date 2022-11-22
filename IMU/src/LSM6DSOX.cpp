@@ -74,10 +74,12 @@ int LSM6DSOX::setupAccel() {
 
 int LSM6DSOX::setupGyro() {
     // Turn on the gyroscope
-    std::cout << "int1_ctrl: " << writeRegisterWordBits(LSM6DSOXRegisterAddress::INT1_CTRL, 1, 0b1, 7) << "\n";
+    std::cout << "INT1_CTRL: " << "\n";
+    writeRegisterWordBits(LSM6DSOXRegisterAddress::INT1_CTRL, 1, 0b1, 7);
 
     // Set high performance mode (417 Hz)
-    std::cout << "int1_ctrl: " << writeRegisterWordBits(LSM6DSOXRegisterAddress::CTRL2_G, 2, 0b11, 0) << "\n";
+    std::cout << "CTRL2_G: " << "\n";
+    writeRegisterWordBits(LSM6DSOXRegisterAddress::CTRL2_G, 2, 0b11, 0);
 
     return 0;
 }
@@ -88,6 +90,9 @@ int main(int argc, char **argv) {
     //int LSM6DSOX_ADRRESS = 0x1c;
     LSM6DSOX imu(IMU_ADRRESS);
     GyroData gd;
+
+    for (int i = 0; i < 100000000; i++) {
+    }
     imu.readGyro(&gd);
 
 
