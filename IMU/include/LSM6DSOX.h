@@ -23,6 +23,7 @@ enum LSM6DSOXRegisterAddress {
     CTRL2_G = 0x11,        ///< Main gyro config register
     CTRL3_C = 0x12,        ///< Main configuration register
     CTRL8_XL = 0x17,       ///< High and low pass for accel
+    CTRL9_XL = 0x18, 	   ///< Accel settings 
     CTRL10_C = 0x19,       ///< Main configuration register
     WAKEUP_SRC = 0x1B,     ///< Why we woke up
     STATUS_REG = 0x1E,     ///< Status register

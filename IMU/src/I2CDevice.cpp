@@ -122,7 +122,7 @@ int16_t I2CDevice::writeRegisterByteBitsLSBOffset(uint16_t regAddress, uint8_t v
 }
 
 
-uint8_t readRegisterByteBitsLSBOffset(uint16_t regAddresss, uint8_t numBits, uint8_t offset) {
+uint8_t I2CDevice::readRegisterByteBitsLSBOffset(uint16_t regAddress, uint8_t numBits, uint8_t offset) {
     uint8_t totalNumBits = 8;
     
     // check offset

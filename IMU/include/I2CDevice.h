@@ -32,7 +32,7 @@ class I2CDevice {
      msb val bit in relation to the lsb of the register. 
     */
     int16_t writeRegisterByteBitsLSBOffset(uint16_t regAddress, uint8_t val, uint8_t numBits, uint8_t offset);
-    uint8_t readRegisterByteBitsLSBOffset(uint16_t regAddresss, uint8_t numBits, uint8_t offset);
+    uint8_t readRegisterByteBitsLSBOffset(uint16_t regAddress, uint8_t numBits, uint8_t offset);
 
 
     private:

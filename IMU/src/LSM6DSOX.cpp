@@ -1,7 +1,7 @@
 
 #include "../include/LSM6DSOX.h"
 #include <bitset>
-#include <time.h>
+#include <unistd.h>
 
 // Public //
 
@@ -25,7 +25,7 @@ LSM6DSOX::LSM6DSOX(const int slaveAddr) : I2CDevice(slaveAddr) {
     setupDeviceParams();
     setupGyro();
     setupAccel();
-    delay(10)
+    sleep(1);
 }
 
 int LSM6DSOX::readGyro(GyroData *gyroData) {
@@ -104,11 +104,12 @@ int LSM6DSOX::setupGyro() {
 int LSM6DSOX::swReset() {
     writeRegisterByteBitsLSBOffset(LSM6DSOXRegisterAddress::CTRL3_C, 1, 1, 0);
 
-    unint8_t reset = 1; 
+    uint8_t reset = 1; 
     while (reset) {
-        reset = readRegisterByteBitsLSBOffset(LSM6DSOXRegisterAddress::CTRL3_C 1, 0));
-        time::nanosleep(100);
+        reset = readRegisterByteBitsLSBOffset(LSM6DSOXRegisterAddress::CTRL3_C, 1, 0);
+        sleep(1);
     }
+    return 0;
 }
 
 int main(int argc, char **argv) {
