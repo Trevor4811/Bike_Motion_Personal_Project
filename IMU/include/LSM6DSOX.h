@@ -87,8 +87,11 @@ class LSM6DSOX : public I2CDevice {
 
     uint16_t verifyI2CAddr();
 
+    int setupDeviceParams();
     int setupAccel();
     int setupGyro();
+
+    int swReset();
 
 };
 

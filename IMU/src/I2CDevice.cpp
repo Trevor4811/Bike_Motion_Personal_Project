@@ -121,5 +121,33 @@ int16_t I2CDevice::writeRegisterByteBitsLSBOffset(uint16_t regAddress, uint8_t v
 
 }
 
+
+uint8_t readRegisterByteBitsLSBOffset(uint16_t regAddresss, uint8_t numBits, uint8_t offset) {
+    uint8_t totalNumBits = 8;
+    
+    // check offset
+    if (offset > totalNumBits-1 || offset < 0) {
+        return -1;
+    }
+    // check write overflow
+    if (numBits > offset + 1) {
+        return -1;
+    }
+
+    // Get initial value
+    uint8_t buf = i2c_smbus_read_byte_data(deviceFilenum, regAddress);
+    std::cout << "read = \t" << std::bitset<8>(buf) << "\n";
+
+    // Shift bits to LSB
+    buf = buf >> (offset-numBits+1);
+    // Mask bits not being read
+    uint8_t ones = ~0;
+    uint8_t mask = ones >> (totalNumBits-numBits);
+    buf = buf & mask;
+
+    return buf;
+}
+
+
 // Private //
 
