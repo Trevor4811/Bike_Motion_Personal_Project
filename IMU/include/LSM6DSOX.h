@@ -55,7 +55,7 @@ typedef struct AccelData {
 } AccelData;
 
 /*!
- * @brief Class to control and communicate with the LSM6DSOX IMU
+ * @brief Class to control and communicate with the LSM6DSOX IMU over I2C
  */
 class LSM6DSOX : public I2CDevice {
 
@@ -86,12 +86,17 @@ class LSM6DSOX : public I2CDevice {
 
     private:
 
+    // Verify the I2C Address is a LSMDSOX device
+    // Returns 0 if verified, else returns the buffer value read from device
     uint16_t verifyI2CAddr();
 
+    // Functions to set different device parameters. Return 0 if successful
     int setupDeviceParams();
     int setupAccel();
     int setupGyro();
 
+    // Software reset the LSM6DSOX device
+    // Return 0 if successful
     int swReset();
 
 };

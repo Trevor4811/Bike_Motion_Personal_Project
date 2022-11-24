@@ -62,6 +62,7 @@ int LSM6DSOX::readAccelerometer(AccelData *accelData) {
 uint16_t LSM6DSOX::verifyI2CAddr() {
     uint16_t buf = 0;
     buf = i2c_smbus_read_word_data(deviceFilenum, LSM6DSOXRegisterAddress::WHOAMI);
+    std::cout << "Who am I return: " << std::bitset<16>(buf) << "\n";
 
     if (buf != LSM6DSOXRegisterAddress::CHIP_ID) {
         return buf;
@@ -81,9 +82,11 @@ int LSM6DSOX::setupDeviceParams() {
 
 int LSM6DSOX::setupAccel() {
     // Turn on the accelerometer
+    std::cout << "INT1_CTRL XL: " << "\n";
     writeRegisterByteBitsLSBOffset(LSM6DSOXRegisterAddress::INT1_CTRL, 1, 1, 0);
 
     // Set high performance mode (417 Hz)
+    std::cout << "CTRL1_XL: " << "\n";
     writeRegisterByteBitsLSBOffset(LSM6DSOXRegisterAddress::CTRL1_XL, 4, 4, 7);
 
     return 0;
@@ -91,7 +94,7 @@ int LSM6DSOX::setupAccel() {
 
 int LSM6DSOX::setupGyro() {
     // Turn on the gyroscope
-    std::cout << "INT1_CTRL: " << "\n";
+    std::cout << "INT1_CTRL G: " << "\n";
     writeRegisterByteBitsLSBOffset(LSM6DSOXRegisterAddress::INT1_CTRL, 1, 1, 1);
 
     // Set high performance mode (417 Hz)
@@ -102,6 +105,7 @@ int LSM6DSOX::setupGyro() {
 }
 
 int LSM6DSOX::swReset() {
+    std::cout << "CTRL3_C: " << "\n";
     writeRegisterByteBitsLSBOffset(LSM6DSOXRegisterAddress::CTRL3_C, 1, 1, 0);
 
     uint8_t reset = 1; 
@@ -109,6 +113,8 @@ int LSM6DSOX::swReset() {
         reset = readRegisterByteBitsLSBOffset(LSM6DSOXRegisterAddress::CTRL3_C, 1, 0);
         sleep(1);
     }
+
+    std::cout << "Completed LSM6DSOX software reset" << "\n";
     return 0;
 }
 
