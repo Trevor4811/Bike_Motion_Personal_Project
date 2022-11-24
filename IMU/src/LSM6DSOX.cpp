@@ -35,15 +35,15 @@ int LSM6DSOX::readGyro(GyroData *gyroData) {
 
     uint8_t temp = readRegisterByte(LSM6DSOXRegisterAddress::STATUS_REG);
     //temp = (temp << 1) & 1;
-    std::cout << "Status: " << std::bitset<16>(temp) << "\n";
+    std::cout << "Status: " << std::bitset<8>(temp) << "\n";
     
     temp = readRegisterByte(LSM6DSOXRegisterAddress::OUTX_L_G);
     //temp = (temp << 1) & 1;
-    std::cout << "gyro: " << std::bitset<16>(temp) << "\n";
+    std::cout << "gyro: " << std::bitset<8>(temp) << "\n";
 
     temp = readRegisterByte(LSM6DSOXRegisterAddress::CTRL2_G);
     //temp = (temp << 1) & 1;
-    std::cout << "gyro Settings: " << std::bitset<16>(temp) << "\n";
+    std::cout << "gyro Settings: " << std::bitset<8>(temp) << "\n";
 
 
     return temp;
