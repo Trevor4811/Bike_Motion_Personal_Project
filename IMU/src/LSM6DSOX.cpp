@@ -61,8 +61,8 @@ int LSM6DSOX::readAccelerometer(AccelData *accelData) {
 
 uint16_t LSM6DSOX::verifyI2CAddr() {
     uint16_t buf = 0;
-    buf = i2c_smbus_read_word_data(deviceFilenum, LSM6DSOXRegisterAddress::WHOAMI);
-    std::cout << "Who am I return: " << std::bitset<16>(buf) << "\n";
+    buf = i2c_smbus_read_byte_data(deviceFilenum, LSM6DSOXRegisterAddress::WHOAMI);
+    std::cout << "Who am I return: " << std::bitset<8>(buf) << "\n";
 
     if (buf != LSM6DSOXRegisterAddress::CHIP_ID) {
         return buf;
@@ -72,9 +72,11 @@ uint16_t LSM6DSOX::verifyI2CAddr() {
 
 int LSM6DSOX::setupDeviceParams() {
     // Block Data Update
+    std::cout << "CTRL3_C dev: " << "\n";
     writeRegisterByteBitsLSBOffset(LSM6DSOXRegisterAddress::CTRL3_C, 1, 1, 6);
 
     // Disable I3C
+    std::cout << "CTRL9_XL dev" << "\n";
     writeRegisterByteBitsLSBOffset(LSM6DSOXRegisterAddress::CTRL9_XL, 1, 1, 1);
 
     return 0;
