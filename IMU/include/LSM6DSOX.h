@@ -48,9 +48,9 @@ enum LSM6DSOXRegisterAddress {
 };
 
 typedef struct GyroData {
-    int16_t rawX;
-    int16_t rawy;
-    int16_t rawz;
+    uint16_t rawx;
+    uint16_t rawy;
+    uint16_t rawz;
 
     float x;
     float y;
@@ -58,9 +58,9 @@ typedef struct GyroData {
 } GyroData;
 
 typedef struct AccelData {
-    int16_t rawx;
-    int16_t rawy;
-    int16_t rawz;
+    uint16_t rawx;
+    uint16_t rawy;
+    uint16_t rawz;
 
     float x;
     float y;
@@ -122,6 +122,7 @@ class LSM6DSOX : public I2CDevice {
 
     // Converts the raw accel data to g
     void convertAccelData(AccelData *accelData);
+    void convertGyroData(GyroData *gyroData);
 
 };
 

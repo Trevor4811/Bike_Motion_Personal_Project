@@ -36,7 +36,7 @@ I2CDevice::I2CDevice(const int slaveAddr) : slaveAddress(slaveAddr) {
 int8_t I2CDevice::readLittleEndian16BitData(uint16_t regAddress, uint16_t *regValue) {
     uint8_t highByte;
     uint8_t lowByte;
-    if (readRegisterByte(regAddress+1, highByte) || readRegisterByte(regAddress, lowByte) {
+    if (readRegisterByte(regAddress+1, &highByte) || readRegisterByte(regAddress, &lowByte)) {
         return -1;
     }
 

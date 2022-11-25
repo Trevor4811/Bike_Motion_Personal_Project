@@ -13,7 +13,7 @@ LSM6DSOX::LSM6DSOX(const int slaveAddr) : I2CDevice(slaveAddr) {
         //Error
 	std::cout << "Failed to verify address. Actual: ";
         std::cout << std::hex << returnVal << "\n" << std::dec;
-    	return;
+    	//return;
     } 
 
     std::cout << "Verified address\n";
@@ -50,7 +50,7 @@ int LSM6DSOX::readGyro(GyroData *gyroData) {
     }
 
     // convert raw 
-    convertAccelData(gyroData);
+    convertGyroData(gyroData);
 
     return 0;
 }
@@ -60,12 +60,13 @@ int LSM6DSOX::readAccelerometer(AccelData *accelData) {
     // Check data available
     uint8_t status;
     readRegisterByte(LSM6DSOXRegisterAddress::STATUS_REG, &status);
+    std::cout << "Status: " << std::bitset<8>(status) << "\n";
     status = status & 1;
     if (!status) {
         std::cout << "No Accel Data\n";
         return -1;
     }
-
+   
     // read data x, y, z
     if (readLittleEndian16BitData(LSM6DSOXRegisterAddress::OUTX_L_A, &(accelData->rawx))) {
         return -1;
@@ -154,6 +155,12 @@ void LSM6DSOX::convertAccelData(AccelData *accelData) {
     accelData->z = accelData->rawz;
 }
 
+void LSM6DSOX::convertGyroData(GyroData *gyroData) {
+    gyroData->x = gyroData->rawx;
+    gyroData->y = gyroData->rawy;
+    gyroData->z = gyroData->rawz;
+}
+
 int main(int argc, char **argv) {
     //int LSM6DSOX_ADRRESS = 0b110101;
     int IMU_ADRRESS = 0x6a;
@@ -162,12 +169,13 @@ int main(int argc, char **argv) {
     GyroData gd;
     AccelData ad;
 
-    for (int i = 0; i < 100000000; i++) {
+    for (int i = 0; i < 100; i++) {
+	sleep(1);
         if (!imu.readAccelerometer(&ad)) {
-            std::cout << "AccelData:\t" << ad->x << ", " << ad->y  << ", " << ad->z << "\n"; 
+            std::cout << "AccelData:\t" << ad.x << ", " << ad.y  << ", " << ad.z << "\n"; 
         }
         if (!imu.readGyro(&gd)) {
-            std::cout << "GyroData:\t" << gd->x << ", " << gd->y  << ", " << gd->z << "\n"; 
+            std::cout << "GyroData:\t" << gd.x << ", " << gd.y  << ", " << gd.z << "\n"; 
         }
     }
 
