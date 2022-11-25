@@ -48,9 +48,11 @@ int8_t I2CDevice::readRegisterByte(uint16_t regAddress, uint8_t *regValue) {
     int32_t buf = 0;
     buf = i2c_smbus_read_byte_data(deviceFilenum, regAddress);
     if (buf < 0) {
+	std::cout << "Failed to read byte data\n";
         return -1;
     }
-    return buf;
+    *regValue = buf;
+    return 0;
 }
 
 uint8_t I2CDevice::writeRegisterByte(uint16_t regAddress, uint8_t val) {

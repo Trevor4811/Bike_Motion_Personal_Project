@@ -168,9 +168,8 @@ int main(int argc, char **argv) {
     LSM6DSOX imu(IMU_ADRRESS);
     GyroData gd;
     AccelData ad;
-
     for (int i = 0; i < 100; i++) {
-	sleep(1);
+	//sleep(1);
         if (!imu.readAccelerometer(&ad)) {
             std::cout << "AccelData:\t" << ad.x << ", " << ad.y  << ", " << ad.z << "\n"; 
         }
