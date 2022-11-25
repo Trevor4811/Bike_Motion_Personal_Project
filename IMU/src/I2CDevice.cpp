@@ -33,9 +33,23 @@ I2CDevice::I2CDevice(const int slaveAddr) : slaveAddress(slaveAddr) {
 
 // Protected //
 
-uint8_t I2CDevice::readRegisterByte(uint16_t regAddress) {
-    uint8_t buf = 0;
+int8_t I2CDevice::readLittleEndian16BitData(uint16_t regAddress, uint16_t *regValue) {
+    uint8_t highByte;
+    uint8_t lowByte;
+    if (readRegisterByte(regAddress+1, highByte) || readRegisterByte(regAddress, lowByte) {
+        return -1;
+    }
+
+    *regValue = (highByte << 8) | lowByte;
+    return 0;
+}
+
+int8_t I2CDevice::readRegisterByte(uint16_t regAddress, uint8_t *regValue) {
+    int32_t buf = 0;
     buf = i2c_smbus_read_byte_data(deviceFilenum, regAddress);
+    if (buf < 0) {
+        return -1;
+    }
     return buf;
 }
 

@@ -26,8 +26,16 @@ class I2CDevice {
     int deviceFilenum;
     const int slaveAddress;
 
+    ////////////////
+    // RegisterIO //
+    ////////////////
+
+    // Read little Endian 16 bit data starting at the given address into regValue
+    // return 0 if successful
+    int8_t readLittleEndian16BitData(uint16_t regAddress, uint16_t *regValue);
+
     // Read the 8-bit register and the register address
-    uint8_t readRegisterByte(uint16_t regAddress);
+    int8_t readRegisterByte(uint16_t regAddress, uint8_t *regValue);
     
     // Write the given value to the 8-bit register at the register address
     uint8_t writeRegisterByte(uint16_t regAddress, uint8_t val);

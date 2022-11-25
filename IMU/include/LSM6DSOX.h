@@ -28,16 +28,29 @@ enum LSM6DSOXRegisterAddress {
     WAKEUP_SRC = 0x1B,     ///< Why we woke up
     STATUS_REG = 0x1E,     ///< Status register
     OUT_TEMP_L = 0x20,     ///< First data register (temperature low)
+    
     OUTX_L_G = 0x22,       ///< First gyro data register
-    OUTX_L_A = 0x28,       ///< First accel data register
+    OUTX_H_G = 0x23,       ///< First gyro data register
+    OUTY_L_G = 0x24,       ///< First gyro data register
+    OUTY_H_G = 0x25,       ///< First gyro data register
+    OUTZ_L_G = 0x26,       ///< First gyro data register
+    OUTZ_H_G = 0x27,       ///< First gyro data register
+    
+    OUTX_L_A = 0x28,       ///< First gyro data register
+    OUTX_H_A = 0x29,       ///< First gyro data register
+    OUTY_L_A = 0x2A,       ///< First gyro data register
+    OUTY_H_A = 0x2B,       ///< First gyro data register
+    OUTZ_L_A = 0x2C,       ///< First gyro data register
+    OUTZ_H_A = 0x2D,       ///< First gyro data register
+    
     STEPCOUNTER = 0x4B,    ///< 16-bit step counter
     TAP_CFG = 0x58        ///< Tap/pedometer configuration
 };
 
 typedef struct GyroData {
-    uint16_t rawX;
-    uint16_t rawy;
-    uint16_t rawz;
+    int16_t rawX;
+    int16_t rawy;
+    int16_t rawz;
 
     float x;
     float y;
@@ -45,9 +58,9 @@ typedef struct GyroData {
 } GyroData;
 
 typedef struct AccelData {
-    uint16_t rawx;
-    uint16_t rawy;
-    uint16_t rawz;
+    int16_t rawx;
+    int16_t rawy;
+    int16_t rawz;
 
     float x;
     float y;
@@ -63,9 +76,12 @@ class LSM6DSOX : public I2CDevice {
 
     /**
      * @brief Construct a new LSM6DSOX object
-     * 
      */
     LSM6DSOX(const int slaveAddr);
+
+    ///////////////////
+    // LSM6DSOX Data //
+    ///////////////////
 
     /*!
      * @brief Read the gyroscope data
@@ -84,7 +100,12 @@ class LSM6DSOX : public I2CDevice {
      */
     int readAccelerometer(AccelData *accelData);
 
+
     private:
+
+    ////////////////////
+    // LSM6DSOX Setup //
+    ////////////////////
 
     // Verify the I2C Address is a LSMDSOX device
     // Returns 0 if verified, else returns the buffer value read from device
@@ -98,6 +119,9 @@ class LSM6DSOX : public I2CDevice {
     // Software reset the LSM6DSOX device
     // Return 0 if successful
     int swReset();
+
+    // Converts the raw accel data to g
+    void convertAccelData(AccelData *accelData);
 
 };
 
