@@ -149,18 +149,6 @@ int LSM6DSOX::swReset() {
     return 0;
 }
 
-void LSM6DSOX::convertAccelData(AccelData *accelData) {
-    accelData->x = accelData->rawx;
-    accelData->y = accelData->rawy;
-    accelData->z = accelData->rawz;
-}
-
-void LSM6DSOX::convertGyroData(GyroData *gyroData) {
-    gyroData->x = gyroData->rawx;
-    gyroData->y = gyroData->rawy;
-    gyroData->z = gyroData->rawz;
-}
-
 int main(int argc, char **argv) {
     //int LSM6DSOX_ADRRESS = 0b110101;
     int IMU_ADRRESS = 0x6a;

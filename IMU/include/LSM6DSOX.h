@@ -47,26 +47,6 @@ enum LSM6DSOXRegisterAddress {
     TAP_CFG = 0x58        ///< Tap/pedometer configuration
 };
 
-typedef struct GyroData {
-    uint16_t rawx;
-    uint16_t rawy;
-    uint16_t rawz;
-
-    float x;
-    float y;
-    float z;
-} GyroData;
-
-typedef struct AccelData {
-    uint16_t rawx;
-    uint16_t rawy;
-    uint16_t rawz;
-
-    float x;
-    float y;
-    float z;
-} AccelData;
-
 /*!
  * @brief Class to control and communicate with the LSM6DSOX IMU over I2C
  */
@@ -79,6 +59,18 @@ class LSM6DSOX : public I2CDevice {
      */
     LSM6DSOX(const int slaveAddr);
 
+    ///////////////
+    // Recording //
+    ///////////////
+
+    /**
+     * @brief Record IMU data to the csv file for the given number of seconds
+     * 
+     * @param filename name of the CSV to store the data. Include extension
+     * @param secRecord the number of seconds to record data for
+    */
+    int recordDataCSV(char* filname, int secRecord);
+
     ///////////////////
     // LSM6DSOX Data //
     ///////////////////
@@ -89,7 +81,6 @@ class LSM6DSOX : public I2CDevice {
      * @param gyroData pointer to the struct to store the gyro data in
      * @return int - Success returns 0
      */
-
     int readGyro(GyroData *gyroData);
 
     /*!
