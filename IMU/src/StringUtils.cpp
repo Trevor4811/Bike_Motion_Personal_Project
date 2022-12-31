@@ -1,6 +1,6 @@
+#include "../include/StringUtils.h"
 
-
-int spaceLeftInString(char* string) {
+int StringUtils::spaceLeftInString(char* string) {
 
     int totalLen = sizeof(string);
 

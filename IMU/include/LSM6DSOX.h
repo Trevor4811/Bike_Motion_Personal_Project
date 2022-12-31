@@ -11,6 +11,8 @@ extern "C" {
 }
 
 #include "I2CDevice.h"
+#include "AccelData.h"
+#include "GyroData.h"
 
 enum LSM6DSOXRegisterAddress {
     CHIP_ID = 0x6C,

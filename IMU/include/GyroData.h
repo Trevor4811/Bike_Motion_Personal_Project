@@ -25,7 +25,7 @@ class GyroData : public IMUData {
 
     private:
 
-    int8_t GyroDataRange;
+    int8_t gyroDataRange;
 
 };
 
