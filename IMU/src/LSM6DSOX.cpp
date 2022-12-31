@@ -2,6 +2,8 @@
 #include "../include/LSM6DSOX.h"
 #include <bitset>
 #include <unistd.h>
+#include <iostream>
+#include <fstream>
 
 // Public //
 
@@ -28,6 +30,47 @@ LSM6DSOX::LSM6DSOX(const int slaveAddr) : I2CDevice(slaveAddr) {
     sleep(1);
 }
 
+int LSM6DSOX::recordDataCSV(char* filename, int secRecord) {
+    stda::ofstream recordFile;
+    recordFile.open (filename, std::ofstream::out | std::ofstream::app);
+
+    if (!recordFile) {
+        recordFile.close()
+        std::cout << "Failed to open csv\n";
+        return -1;
+    }
+
+    GyroData gd(2);
+    AccelData ad(2000);
+
+    auto now = std::chrono::steady_clock::now;
+    using namespace std::chrono_literals;
+    auto work_duration = (secRecord)s;
+    auto start = now();
+    char gdStr[150];
+    char adStr[150];
+
+    while ((now() - start) < work_duration) {
+        readGyro(&gd);
+        readAccelerometer(&ad);
+        gd.csvFormat(gdStr);
+        ad.csvFormat(adStr)
+        if (recordFile) {
+            recordFile << "Gyro:," << gdStr
+            recordFile << "Accel" << adStr << "\n";
+        } else {
+            recordFile.close();
+            std::cout << "CSV messed up\n";
+            return -1;
+        }
+    }
+
+    std::cout << "Finished recording";
+    recordFile.close();
+    
+    return 0;
+}
+
 int LSM6DSOX::readGyro(GyroData *gyroData) {
     // Check data available
     uint8_t status;
@@ -50,7 +93,7 @@ int LSM6DSOX::readGyro(GyroData *gyroData) {
     }
 
     // convert raw 
-    convertGyroData(gyroData);
+    gyroData->convertRawData();
 
     return 0;
 }
@@ -79,7 +122,7 @@ int LSM6DSOX::readAccelerometer(AccelData *accelData) {
     }
 
     // convert raw 
-    convertAccelData(accelData);
+    accelData->convertRawData();
 
     return 0;
 }
