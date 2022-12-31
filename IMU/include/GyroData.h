@@ -13,7 +13,7 @@ class GyroData : public IMUData {
 
     virtual int convertRawData();
 
-    GyroData(int8_t GyroDataRange);
+    GyroData(int8_t gyroDataRange);
 
     uint16_t rawx;
     uint16_t rawy;
@@ -25,7 +25,7 @@ class GyroData : public IMUData {
 
     private:
 
-    int8_t GyroDataRange;
+    int8_t gyroDataRange;
 
 };
 

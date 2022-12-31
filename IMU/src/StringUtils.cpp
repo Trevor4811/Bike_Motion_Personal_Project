@@ -1,4 +1,4 @@
-
+#include "../include/StringUtils.h"
 
 int spaceLeftInString(char* string) {
 
