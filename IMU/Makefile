@@ -32,7 +32,7 @@ else
 	mkdir -p $(BUILDDIR)
 endif
 
-LSM6DSOX: dirs LSM6DSOX.o I2CDevice.o I2CBus.o
+LSM6DSOX: dirs LSM6DSOX.o I2CDevice.o I2CBus.o AccelData.o GyroData.o
 	$(CXX) -o $(BINDIR)/LSM6DSOX $(BUILDDIR)/LSM6DSOX.o $(BUILDDIR)/I2CDevice.o $(BUILDDIR)/I2CBus.o -li2c
 
 LSM6DSOX.o: dirs $(SRCDIR)/LSM6DSOX.cpp
@@ -44,6 +44,11 @@ I2CDevice: dirs I2CDevice.o I2CBus.o
 I2CDevice.o: dirs $(SRCDIR)/I2CDevice.cpp
 	$(CXX) $(CFLAGS) -o $(BUILDDIR)/I2CDevice.o $(SRCDIR)/I2CDevice.cpp
 
+AccelData.o: dirs $(SRCDIR)/AccelData.cpp
+	$(CXX) $(CXXFLAGS) -o $(BUILDDIR)/AccelData.o $(SRCDIR)/AccelData.cpp
+
+GyroData.o: dirs $(SRCDIR)/GyroData.cpp
+	$(CXX) $(CXXFLAGS) -o $(BUILDDIR)/GyroData.o $(SRCDIR)/GyroData.cpp
 
 I2CBus: dirs I2CBus.o
 	$(CXX) -o $(BINDIR)/I2CBus $(BUILDDIR)/I2CBus.o
